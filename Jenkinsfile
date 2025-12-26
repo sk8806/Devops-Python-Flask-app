@@ -2,18 +2,11 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout Code') {
-            steps {
-                checkout scm
-            }
-        }
-
         stage('Install Dependencies') {
             steps {
                 sh '''
                 python3 -m venv venv
                 . venv/bin/activate
-                pip install --upgrade pip
                 pip install -r requirements.txt
                 '''
             }
@@ -23,6 +16,7 @@ pipeline {
             steps {
                 sh '''
                 . venv/bin/activate
+                export PYTHONPATH=$PWD
                 pytest
                 '''
             }
