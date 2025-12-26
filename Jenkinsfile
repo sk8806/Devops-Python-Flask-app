@@ -20,6 +20,14 @@ pipeline {
                 pytest
                 '''
             }
-        }
+     }
+        stage('Build Docker Image') {
+            steps {
+                sh '''
+                docker build -t flask-app:1.0 .
+                '''
+           }
+	}
     }
+
 }
